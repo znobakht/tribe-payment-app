@@ -57,7 +57,8 @@ class App {
     }
 
     if (dbConnection) {
-      connect(dbConnection.url, dbConnection.options);
+      // connect(dbConnection.url, dbConnection.options);
+      connect(dbConnection.url).then(() => logger.info(`connected to database at ${dbConnection.url}`));
     }
   }
 
