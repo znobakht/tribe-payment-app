@@ -28,9 +28,10 @@ class WebhookController {
         status: 'SUCCEEDED',
         data: {},
       };
-      switch (input.name) {
+      switch (input.data.name) {
         case 'post.created':
           {
+            // console.log('post created');
             result = {
               type: input.type,
               status: 'FAILED',
@@ -52,10 +53,12 @@ class WebhookController {
         case 'UPDATE_SETTINGS':
           result = await this.updateSettings(input);
           break;
-        case 'SUBSCRIPTION':
-          result = await this.handleSubscription(input);
-          break;
+        // case 'SUBSCRIPTION':
+        //   result = await this.handleSubscription(input);
+        //   break;
       }
+      // console.log('result');
+      // console.log(result);
       res.status(200).json(result);
     } catch (error) {
       logger.error(error);
