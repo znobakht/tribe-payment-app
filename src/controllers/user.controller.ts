@@ -9,7 +9,8 @@ class userController {
       if (!req.body.email || !req.body.password) {
         return res.status(400).json({ message: 'Missing required fields' });
       }
-      const { email, password } = req.body;
+      const password = req.body.password.trim();
+      const email = req.body.email.trim();
       const userObject = await userModel.findOne({ email });
       if (userObject) {
         return res.status(400).json({ message: 'This email is in use' });

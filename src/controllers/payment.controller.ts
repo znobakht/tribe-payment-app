@@ -8,7 +8,8 @@ class PaymentController {
       if (!req.body.email || !req.body.amount) {
         return res.status(400).json({ message: 'Missing required fields' });
       }
-      const { email, amount } = req.body;
+      const { amount } = req.body;
+      const email = req.body.email.trim();
       let userObject = await userModel.findOne({ email });
       if (userObject) {
         userObject.wallet += amount;

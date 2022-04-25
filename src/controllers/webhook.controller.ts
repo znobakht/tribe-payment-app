@@ -78,7 +78,7 @@ class WebhookController {
    */
   private async checkForPayment(input) {
     try {
-      const email = input.email;
+      const email = input.email.trim();
       const userObject = await userModel.findOne({ email });
       if (!userObject || userObject.wallet < price) {
         return {
