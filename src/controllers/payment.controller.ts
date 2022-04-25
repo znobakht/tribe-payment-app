@@ -16,8 +16,8 @@ class PaymentController {
         userObject = new userModel({ email, wallet: amount });
       }
       userObject.save();
-      const transactionObject = await transactionModel.create({ email, amount, type: 'pay' });
-      res.send(transactionObject);
+      await transactionModel.create({ email, amount, type: 'pay' });
+      res.json({ message: `account of ${email} charged ${amount}$ successfully` });
     } catch (error) {
       next(error);
     }
