@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
 import WebhookController from '@/controllers/webhook.controller';
 
-class IndexRoute implements Routes {
+class WebhookRoute implements Routes {
   public path = '/webhook';
   public router = Router();
   public webhookController = new WebhookController();
@@ -16,4 +16,4 @@ class IndexRoute implements Routes {
   }
 }
 
-export default IndexRoute;
+export default WebhookRoute;
