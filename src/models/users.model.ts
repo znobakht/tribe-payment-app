@@ -1,8 +1,11 @@
 import { model, Schema, Document } from 'mongoose';
 //import { User } from '@interfaces/users.interface';
+const secretKey = process.env.secretKey || 'secret';
+import jwt from 'jsonwebtoken';
 interface userInterface extends Document {
   name?: string;
   email: string;
+  password: string;
   wallet: number;
 }
 const userSchema: Schema = new Schema<userInterface>({
@@ -13,12 +16,21 @@ const userSchema: Schema = new Schema<userInterface>({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   wallet: {
     type: Number,
     default: 0,
   },
 });
 
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id, email: this.email }, secretKey, {
+    expiresIn: '5d',
+  });
+};
 const userModel = model<userInterface>('User', userSchema);
 
 export default userModel;
