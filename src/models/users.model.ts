@@ -7,6 +7,7 @@ interface userInterface extends Document {
   email: string;
   password: string;
   wallet: number;
+  generateAuthToken(): any;
 }
 const userSchema: Schema = new Schema<userInterface>({
   name: {
@@ -27,7 +28,7 @@ const userSchema: Schema = new Schema<userInterface>({
 });
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id, email: this.email }, secretKey, {
+  return jwt.sign({ _id: this._id, email: this.email }, secretKey, {
     expiresIn: '5d',
   });
 };
