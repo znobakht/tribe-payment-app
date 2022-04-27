@@ -1,7 +1,7 @@
 import userModel from '@/models/users.model';
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 class userController {
   public registerUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -21,9 +21,9 @@ class userController {
         email,
         password: newPass,
       });
-      const userForSend: any = _.pick(profile, ['_id', 'name', 'email']);
+      // const userForSend: any = _.pick(profile, ['_id', 'name', 'email']);
 
-      return res.status(200).json({ message: 'account created successfully', profile: userForSend });
+      return res.status(200).json({ message: 'account created successfully', profile: { _id: profile._id, email: profile.email } });
     } catch (error) {
       next(error);
     }
@@ -43,8 +43,8 @@ class userController {
         return res.status(404).json({ message: 'password is incorrect' });
       }
       const token = userObject.generateAuthToken();
-      const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
-      res.status(200).json({ token: 'Bearer ' + token, profile: userForSend });
+      // const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
+      res.status(200).json({ token: 'Bearer ' + token, profile: { _id: userObject._id, email: userObject.email } });
     } catch (error) {
       next(error);
     }
