@@ -3,6 +3,7 @@ import { model, Schema, Document } from 'mongoose';
 interface userInterface extends Document {
   name?: string;
   email: string;
+  password: string;
   wallet: number;
 }
 const userSchema: Schema = new Schema<userInterface>({
@@ -10,6 +11,10 @@ const userSchema: Schema = new Schema<userInterface>({
     type: String,
   },
   email: {
+    type: String,
+    required: true,
+  },
+  password: {
     type: String,
     required: true,
   },
