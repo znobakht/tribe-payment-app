@@ -1,10 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import userModel from '@/models/users.model';
 import bcrypt from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 const secretKey = process.env.secretKey || 'secret';
 import jwt from 'jsonwebtoken';
-import _ from 'lodash';
 class userController {
+  // public registerUser = async (req: Request, res: Response, next: NextFunction) => {
+  //   try {
+  //     res.render('home', { title: 'Starter App' });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
   public registerUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!req.body.email || !req.body.password) {
@@ -44,15 +51,20 @@ class userController {
       if (!isMatch) {
         return res.status(404).json({ message: 'password is incorrect' });
       }
-      const token = jwt.sign({ _id: userObject._id, email: userObject.email }, secretKey, {
-        expiresIn: '5d',
-      });
-      const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
-      res.status(200).json({ token: 'Bearer ' + token, profile: userForSend });
+      // const token = sign({ user: { _id: userObject._id, email: userObject.email } }, secretKey);
+      // // const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
+      res.status(200).json({ token: token, profile: userObject });
     } catch (error) {
       next(error);
     }
   };
+  // public loginUser = async (req: Request, res: Response, next: NextFunction) => {
+  //   try {
+  //     res.render('home', { title: 'Starter App' });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 }
 
 export default userController;

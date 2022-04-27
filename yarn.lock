@@ -2081,7 +2081,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonwebtoken@npm:^8.5.0, @types/jsonwebtoken@npm:^8.5.4":
+"@types/jsonwebtoken@npm:^8.5.0, @types/jsonwebtoken@npm:^8.5.8":
   version: 8.5.8
   resolution: "@types/jsonwebtoken@npm:8.5.8"
   dependencies:
@@ -2642,7 +2642,7 @@ __metadata:
     "@types/helmet": ^4.0.0
     "@types/hpp": ^0.2.1
     "@types/jest": ^26.0.24
-    "@types/jsonwebtoken": ^8.5.4
+    "@types/jsonwebtoken": ^8.5.8
     "@types/mongoose": ^5.11.97
     "@types/morgan": ^1.9.3
     "@types/node": ^16.0.1
