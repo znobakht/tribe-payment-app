@@ -1,13 +1,12 @@
 import { model, Schema, Document } from 'mongoose';
 //import { User } from '@interfaces/users.interface';
-const secretKey = process.env.secretKey || 'secret';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 interface userInterface extends Document {
   name?: string;
   email: string;
   password: string;
   wallet: number;
-  generateAuthToken(): any;
+  // generateAuthToken(): any;
 }
 const userSchema: Schema = new Schema<userInterface>({
   name: {
@@ -27,11 +26,11 @@ const userSchema: Schema = new Schema<userInterface>({
   },
 });
 
-userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ _id: this._id, email: this.email }, secretKey, {
-    expiresIn: '1d',
-  });
-};
+// userSchema.methods.generateAuthToken = function () {
+//   return jwt.sign({ _id: this._id, email: this.email }, secretKey, {
+//     expiresIn: '1d',
+//   });
+// };
 const userModel = model<userInterface>('User', userSchema);
 
 export default userModel;

@@ -1,10 +1,11 @@
 import userModel from '@/models/users.model';
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import _ from 'lodash';
+// import _ from 'lodash';
 import refreshTokenModel from '@/models/refreshToken.model';
 import { v4 as uuidv4 } from 'uuid';
-
+import jwt from 'jsonwebtoken';
+import { secretKey } from '@/config';
 class userController {
   public registerUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -23,9 +24,9 @@ class userController {
         email,
         password: newPass,
       });
-      const userForSend: any = _.pick(profile, ['_id', 'name', 'email']);
+      // const userForSend: any = _.pick(profile, ['_id', 'name', 'email']);
 
-      return res.status(200).json({ message: 'account created successfully', profile: userForSend });
+      return res.status(200).json({ message: 'account created successfully', profile: { _id: profile._id, email: profile.email } });
     } catch (error) {
       next(error);
     }
@@ -44,11 +45,15 @@ class userController {
       if (!isMatch) {
         return res.status(404).json({ message: 'password is incorrect' });
       }
-      const token = userObject.generateAuthToken();
+      const token = jwt.sign({ _id: userObject._id, email: userObject.email }, secretKey, {
+        expiresIn: '1d',
+      });
+      // const token = userObject.generateAuthToken();
+
       const refreshToken = uuidv4();
       await refreshTokenModel.create({ user: userObject._id, token, refreshToken });
-      const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
-      res.status(200).json({ token, profile: userForSend, refreshToken });
+      // const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
+      res.status(200).json({ token, profile: { _id: userObject._id, email: userObject.email }, refreshToken });
     } catch (error) {
       next(error);
     }
@@ -87,7 +92,10 @@ class userController {
       if (!userObject) {
         return res.status(400).json({ message: 'user doesnt exist' });
       }
-      const token = userObject.generateAuthToken();
+      const token = jwt.sign({ _id: userObject._id, email: userObject.email }, secretKey, {
+        expiresIn: '1d',
+      });
+      // const token = userObject.generateAuthToken();
 
       res.status(200).json({ token, refreshToken });
       next();
