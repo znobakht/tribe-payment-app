@@ -29,7 +29,7 @@ const userSchema: Schema = new Schema<userInterface>({
 
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign({ _id: this._id, email: this.email }, secretKey, {
-    expiresIn: '5d',
+    expiresIn: '1d',
   });
 };
 const userModel = model<userInterface>('User', userSchema);
