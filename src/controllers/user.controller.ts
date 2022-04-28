@@ -45,15 +45,15 @@ class userController {
       if (!isMatch) {
         return res.status(404).json({ message: 'password is incorrect' });
       }
-      const token = jwt.sign({ _id: userObject._id, email: userObject.email }, secretKey, {
-        expiresIn: '1d',
-      });
+      // const token = jwt.sign({ _id: userObject._id, email: userObject.email }, secretKey, {
+      //   expiresIn: '1d',
+      // });
       // const token = userObject.generateAuthToken();
 
       const refreshToken = uuidv4();
-      await refreshTokenModel.create({ user: userObject._id, token, refreshToken });
+      await refreshTokenModel.create({ user: userObject._id, token: 'tiken', refreshToken });
       // const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
-      res.status(200).json({ token, profile: { _id: userObject._id, email: userObject.email }, refreshToken });
+      res.status(200).json({ token: 'tiken', profile: { _id: userObject._id, email: userObject.email }, refreshToken });
     } catch (error) {
       next(error);
     }
@@ -92,12 +92,12 @@ class userController {
       if (!userObject) {
         return res.status(400).json({ message: 'user doesnt exist' });
       }
-      const token = jwt.sign({ _id: userObject._id, email: userObject.email }, secretKey, {
-        expiresIn: '1d',
-      });
+      // const token = jwt.sign({ _id: userObject._id, email: userObject.email }, secretKey, {
+      //   expiresIn: '1d',
+      // });
       // const token = userObject.generateAuthToken();
 
-      res.status(200).json({ token, refreshToken });
+      res.status(200).json({ token: 'tiken', refreshToken });
       next();
     } catch (error) {
       next(error);
