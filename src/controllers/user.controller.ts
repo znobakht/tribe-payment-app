@@ -5,6 +5,8 @@ import { sign } from 'jsonwebtoken';
 const secretKey = process.env.secretKey || 'secret';
 import jwt from 'jsonwebtoken';
 import refreshTokenModel from '@/models/refreshToken.model';
+import { v4 as uuidv4 } from 'uuid';
+
 class userController {
   // public registerUser = async (req: Request, res: Response, next: NextFunction) => {
   //   try {
@@ -52,6 +54,11 @@ class userController {
       if (!isMatch) {
         return res.status(404).json({ message: 'password is incorrect' });
       }
+
+      // const refreshToken = uuidv4();
+      const refreshToken = 'uuidv4()';
+      await refreshTokenModel.create({ user: userObject._id, refreshToken });
+
       // const token = sign({ user: { _id: userObject._id, email: userObject.email } }, secretKey);
       // // const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
       res.status(200).json({ token: 'token', profile: userObject });
