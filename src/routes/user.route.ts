@@ -14,7 +14,9 @@ class UserRoute implements Routes {
   private initializeRoutes() {
     /**This function manages pay process */
     this.router.post(`${this.path}`, this.userController.registerUser);
-    this.router.get(`${this.path}`, this.userController.loginUser);
+    this.router.post(`${this.path}/login`, this.userController.loginUser);
+    this.router.post(`${this.path}/logout`, this.userController.logoutUser);
+    this.router.post(`${this.path}/getToken`, this.userController.getToken);
   }
 }
 
