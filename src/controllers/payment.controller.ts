@@ -3,7 +3,7 @@ import userModel from '@/models/users.model';
 import { NextFunction, Request, Response } from 'express';
 
 class PaymentController {
-  public pay = async (req: Request, res: Response, next: NextFunction) => {
+  public payWithEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!req.body.email || !req.body.amount) {
         return res.status(400).json({ message: 'Missing required fields' });
