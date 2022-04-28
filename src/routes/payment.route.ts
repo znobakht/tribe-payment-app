@@ -14,6 +14,7 @@ class PaymentRoute implements Routes {
   private initializeRoutes() {
     /**This function manages pay process */
     this.router.post(`${this.path}/email`, this.paymentController.payWithEmail);
+    this.router.post(`${this.path}/pass`, this.paymentController.payWithPass);
   }
 }
 
