@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 const secretKey = process.env.secretKey || 'secret';
 import jwt from 'jsonwebtoken';
+import refreshTokenModel from '@/models/refreshToken.model';
 class userController {
   // public registerUser = async (req: Request, res: Response, next: NextFunction) => {
   //   try {
@@ -53,7 +54,7 @@ class userController {
       }
       // const token = sign({ user: { _id: userObject._id, email: userObject.email } }, secretKey);
       // // const userForSend: any = _.pick(userObject, ['_id', 'name', 'email']);
-      res.status(200).json({ token: token, profile: userObject });
+      res.status(200).json({ token: 'token', profile: userObject });
     } catch (error) {
       next(error);
     }
@@ -65,6 +66,49 @@ class userController {
   //     next(error);
   //   }
   // };
+  public logoutUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (!req.headers.refreshToken) {
+        return res.status(400).json({ message: 'Missing required fields' });
+      }
+
+      const rtObject = await refreshTokenModel.findOne({ refreshToken: req.headers.refreshToken });
+
+      if (!rtObject) {
+        return res.status(400).json({ message: 'you are not logged in' });
+      }
+      await refreshTokenModel.deleteMany({ refreshToken: req.headers.refreshToken });
+      return res.status(200).json({ message: 'you logged out successfully' });
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+  public getToken = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (!req.headers.refreshToken) {
+        return res.status(400).json({ message: 'Missing required fields' });
+      }
+
+      const refreshToken = req.headers.refreshToken;
+      const rtObject = await refreshTokenModel.findOne({ refreshToken });
+
+      if (!rtObject) {
+        return res.status(400).json({ message: 'you are not logged in' });
+      }
+      const userObject = await userModel.findById(rtObject.user);
+      if (!userObject) {
+        return res.status(400).json({ message: 'user doesnt exist' });
+      }
+      // const token = userObject.generateAuthToken();
+      const token = 'userObject.generateAuthToken()';
+
+      res.status(200).json({ token, refreshToken });
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default userController;
