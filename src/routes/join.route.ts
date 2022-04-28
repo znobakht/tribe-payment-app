@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
-import PaymentController from '@/controllers/join.controller';
+import JoinController from '@/controllers/join.controller';
 
-class PaymentRoute implements Routes {
+class JoinRoute implements Routes {
   public path = '/join';
   public router = Router();
-  public paymentController = new PaymentController();
+  public joinController = new JoinController();
 
   constructor() {
     this.initializeRoutes();
@@ -13,8 +13,8 @@ class PaymentRoute implements Routes {
 
   private initializeRoutes() {
     /**This function manages pay process */
-    this.router.post(`${this.path}`, this.paymentController.joinWithPass);
+    this.router.post(`${this.path}`, this.joinController.joinWithPass);
   }
 }
 
-export default PaymentRoute;
+export default JoinRoute;
