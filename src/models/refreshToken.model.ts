@@ -1,16 +1,16 @@
 import { model, Schema, Document } from 'mongoose';
 
 export interface RefreshTokenInterface extends Document {
-  token: string;
+  // token: string;
   refreshToken?: string;
   user?: string;
   expire: Date;
 }
 const RefreshTokenSchema: Schema = new Schema<RefreshTokenInterface>({
-  token: {
-    type: String,
-    required: true,
-  },
+  // token: {
+  //   type: String,
+  //   required: true,
+  // },
   refreshToken: {
     type: String,
     required: true,
