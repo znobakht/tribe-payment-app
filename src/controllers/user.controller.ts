@@ -102,7 +102,8 @@ class userController {
       }
       // const token = userObject.generateAuthToken();
       const token = 'userObject.generateAuthToken()';
-
+      refreshTokenModel.create({ refreshToken, user: rtObject.user });
+      rtObject.delete();
       res.status(200).json({ token, refreshToken });
       next();
     } catch (error) {
