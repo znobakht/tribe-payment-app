@@ -9,19 +9,20 @@ class MemberController {
         clientId: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
         onError: err => {
-          console.log(err);
+          console.log('err', err);
+          return err;
         },
       });
       const accessToken = await client.generateToken({
         networkId: NETWORK_ID,
       });
       client.setToken(accessToken);
-      const { email, password, name } = req.body;
+      const { email, passwordForCommunity, name } = req.body;
       const newMem = await client.auth.joinNetwork(
         {
           input: {
             email,
-            password,
+            password: passwordForCommunity,
             name,
           },
         },
@@ -30,8 +31,8 @@ class MemberController {
       //   console.log(newMem);
       return newMem;
     } catch (error) {
-      logger.info(error);
-      return false;
+      console.log('error.message');
+      return error.message;
     }
   };
 }
