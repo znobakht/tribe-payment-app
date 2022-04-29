@@ -1,7 +1,7 @@
 This app is designed to add payment to tribe communities. There are different groups of people who want to have a community with monthly or annual fees, like sports trainers, content providers, and so on.
 The procedure for using the app is like the below:
 1- In the beginning, the user has to register. This method is in user route and controller. (Post to /user)
-2- Then, the user must charge the account. This function needs to connect to Paypal or other payment services, but I had no access to them in Iran. (Post to /pay)
+2- Then, the user must charge the account. This function needs to connect to Paypal or other payment services, but I had no access to them in Iran. (Post to /payment/pass)
 3-finally, the user can request for joining to the community. (Post to /join) This method is on the join controller. In addition, the member controller is used for adding members.
 At first, I wanted to use the join_request webhook for this app, but unfortunately, if the community be private, the new user cannot send a join request. (or maybe another thing leads to this problem. you can see the problem in the video on the link in the email.)
 The authentication procedure was implemented by using JWT tokens and refresh tokens, however for unknown problems, "jsonwebtoken" and "uuid" libraries didn't work. when I've been using sign and verify functions of jsonwebtoken and v4 of uuid, the app has been crashed. So I commented these lines in the user controller.
