@@ -34,7 +34,7 @@ class PaymentController {
       if (!userObject) {
         return res.status(400).json({ message: 'user doesnt exist' });
       }
-      const isMatch = bcrypt.compare(password, userObject.password);
+      const isMatch = await bcrypt.compare(password, userObject.password);
       if (!isMatch) {
         return res.status(404).json({ message: 'password is incorrect' });
       }
